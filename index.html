@@ -83,6 +83,22 @@
       color: var(--text-muted);
       line-height: 1.65;
     }
+    section .section-desc .phrase-highlight {
+      color: var(--accent);
+      font-weight: 600;
+      padding: 0 2px;
+    }
+    .section-disclaimer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+    .section-disclaimer a.disclaimer-link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .section-disclaimer a.disclaimer-link:hover { text-decoration: underline; }
 
     header {
       position: sticky;
@@ -174,21 +190,50 @@
     .hero .tagline {
       font-size: 1.35rem;
       font-weight: 500;
-      color: var(--text);
-      max-width: 580px;
+      color: var(--text-muted);
+      max-width: 100%;
       margin: 0 auto 20px;
-      line-height: 1.5;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    .hero .tagline .tagline-accent {
+      color: var(--accent);
+      font-weight: 600;
       letter-spacing: -0.01em;
+    }
+    .hero .tagline .tagline-dot {
+      color: var(--border);
+      font-weight: 400;
+      margin: 0 0.2em;
+      user-select: none;
+    }
+    .hero .hero-copy {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: justify;
     }
     .hero .intro {
       font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 100%;
       margin: 0 auto 16px;
-      line-height: 1.7;
+      line-height: 1.75;
     }
     .hero .intro:last-of-type {
       margin-bottom: 28px;
+    }
+    .hero .intro.hero-shine {
+      text-align: center;
+      background: linear-gradient(90deg, var(--text-muted) 0%, var(--text-muted) 38%, var(--accent) 50%, var(--text-muted) 62%, var(--text-muted) 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: hero-shine 10s ease-in-out infinite;
+    }
+    @keyframes hero-shine {
+      0%, 100% { background-position: 120% 0; }
+      50% { background-position: -20% 0; }
     }
     .hero .intro .sdk-names {
       font-weight: 600;
@@ -357,6 +402,10 @@
       max-width: 120px;
       object-fit: contain;
       vertical-align: middle;
+    }
+    .sdks-marquee .sdk-pill img.sdk-logo-light {
+      filter: brightness(0) invert(1);
+      opacity: 0.95;
     }
     @keyframes marquee {
       0% { transform: translateX(0); }
@@ -529,6 +578,7 @@
       }
       .nav-links a:last-child { border-bottom: none; }
       .hero { padding: 48px 0 40px; }
+      .hero .hero-copy { text-align: left; }
       .hero h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); margin-bottom: 16px; }
       .hero .tagline { font-size: 1.15rem; }
       .hero .intro { font-size: 1rem; }
@@ -574,9 +624,11 @@
     <section class="hero">
       <div class="wrap">
       <h1>Observability for every quantum SDK</h1>
-      <p class="tagline">One decorator. One dashboard. Every run.</p>
-      <p class="intro">QObserva gives you metrics, traces, and insights for your quantum programs—whether you use <strong class="sdk-names">Qiskit</strong>, <strong class="sdk-names">Braket</strong>, <strong class="sdk-names">Cirq</strong>, <strong class="sdk-names">PennyLane</strong>, <strong class="sdk-names">PyQuil</strong>, or <strong class="sdk-names">D-Wave</strong>. Add a single decorator to your runs and see success rates, runtime, and analytics in a local dashboard.</p>
-      <p class="intro">Everything runs on your machine. No cloud, no account. One install and one command to get started.</p>
+      <p class="tagline">One decorator<span class="tagline-dot">·</span>One dashboard<span class="tagline-dot">·</span><span class="tagline-accent">Every run.</span></p>
+      <div class="hero-copy">
+        <p class="intro">QObserva gives you metrics, traces, and insights for your quantum programs—whether you use <strong class="sdk-names">Qiskit</strong>, <strong class="sdk-names">Braket</strong>, <strong class="sdk-names">Cirq</strong>, <strong class="sdk-names">PennyLane</strong>, <strong class="sdk-names">PyQuil</strong>, or <strong class="sdk-names">D-Wave</strong>. Add a single decorator to your runs and see success rates, runtime, and analytics in a local dashboard.</p>
+        <p class="intro hero-shine">Everything runs on your machine. No cloud, no account. One install and one command to get started.</p>
+      </div>
       <a href="#how-it-works" class="cta">See how it works</a>
       <a href="#install" class="cta secondary">Install</a>
       </div>
@@ -700,24 +752,25 @@
     <section class="sdks-section dark" id="sdks">
       <div class="wrap">
         <h2>Works with your stack</h2>
-        <p class="section-desc">One observability layer for every major Python quantum SDK. Same decorator, same dashboard, same schema.</p>
+        <p class="section-desc">One observability layer for every major <span class="phrase-highlight">Python quantum SDK</span>. Same decorator, same dashboard, same schema.<sup>*</sup></p>
         <div class="sdks-marquee-wrap">
           <div class="sdks-marquee">
-            <!-- Qiskit, PennyLane: logo + name. Cirq, D-Wave: logo only (logo has text). Braket: Amazon Braket org avatar. PyQuil: Rigetti org avatar (github.com/rigetti/pyquil). -->
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" /><span class="sdk-name">Qiskit</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Amazon Braket" /><span class="sdk-name">Braket</span></span>
-            <span class="sdk-pill"><img src="https://raw.githubusercontent.com/quantumlib/Cirq/main/docs/images/Cirq_logo_color.svg" alt="Cirq" /></span>
+            <!-- Braket, PennyLane, PyQuil: logo + name. Cirq: logo + name. Qiskit: logo (light) + name. D-Wave: logo only. -->
+            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Braket" /><span class="sdk-name">Braket</span></span>
+            <span class="sdk-pill"><img src="https://quantumai.google/static/site-assets/images/marketing/icons/shared-ic-cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
             <span class="sdk-pill"><img src="https://raw.githubusercontent.com/PennyLaneAI/pennylane/master/doc/_static/favicon.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil (Rigetti)" /><span class="sdk-name">PyQuil</span></span>
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/D-Wave_Systems_logo.svg" alt="D-Wave" /></span>
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" /><span class="sdk-name">Qiskit</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Amazon Braket" /><span class="sdk-name">Braket</span></span>
-            <span class="sdk-pill"><img src="https://raw.githubusercontent.com/quantumlib/Cirq/main/docs/images/Cirq_logo_color.svg" alt="Cirq" /></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/5449030?s=48&v=4" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
+            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Braket" /><span class="sdk-name">Braket</span></span>
+            <span class="sdk-pill"><img src="https://quantumai.google/static/site-assets/images/marketing/icons/shared-ic-cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
             <span class="sdk-pill"><img src="https://raw.githubusercontent.com/PennyLaneAI/pennylane/master/doc/_static/favicon.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil (Rigetti)" /><span class="sdk-name">PyQuil</span></span>
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/D-Wave_Systems_logo.svg" alt="D-Wave" /></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
+            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/5449030?s=48&v=4" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
           </div>
         </div>
+        <p class="section-disclaimer"><sup>*</sup> Compatibility, supported adapters, and parameters vary by SDK. See the <a href="docs.html" class="disclaimer-link">documentation</a> for your SDK for details.</p>
       </div>
     </section>
 
