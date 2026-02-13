@@ -84,6 +84,12 @@
       line-height: 1.65;
     }
 
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+    }
     nav {
       display: flex;
       align-items: center;
@@ -97,13 +103,13 @@
       gap: clamp(0.5rem, 2vw, 12px);
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      font-size: clamp(1.4rem, 4vw, 1.75rem);
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.02em;
     }
     .logo .logo-img {
-      height: clamp(1.85rem, 5vw, 2.35rem);
+      height: clamp(2.35rem, 6vw, 2.9rem);
       width: auto;
       display: block;
       object-fit: contain;
@@ -116,8 +122,37 @@
       font-size: 0.9rem;
       font-weight: 500;
       transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a .gh-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Hamburger: hidden on desktop */
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text);
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 1px;
+    }
+    .hamburger-btn:hover { border-color: var(--accent); color: var(--accent); }
 
     /* Hero — more wording, catchier tagline */
     .hero {
@@ -448,7 +483,7 @@
     }
     footer .legal { font-size: 0.8rem; color: var(--text-muted); opacity: 0.9; }
     footer .footer-logo {
-      height: clamp(2rem, 5vw, 3rem);
+      height: clamp(2.25rem, 5.5vw, 3.5rem);
       width: auto;
       opacity: 0.9;
       display: block;
@@ -467,9 +502,32 @@
     }
     @media (max-width: 768px) {
       .wrap { padding: 0 16px; }
+      header { position: sticky; top: 0; z-index: 100; }
       section { padding: 48px 0; }
-      nav { flex-wrap: wrap; gap: 12px; }
-      .nav-links { gap: 16px; flex-wrap: wrap; }
+      nav { flex-wrap: wrap; position: relative; }
+      .hamburger-btn { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 0 -16px;
+        padding: 16px 24px;
+        background: #0a0a0c;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.8);
+        flex-direction: column;
+        gap: 0;
+        z-index: 10;
+      }
+      nav.nav-open .nav-links { display: flex; }
+      .nav-links a {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 1rem;
+      }
+      .nav-links a:last-child { border-bottom: none; }
       .hero { padding: 48px 0 40px; }
       .hero h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); margin-bottom: 16px; }
       .hero .tagline { font-size: 1.15rem; }
@@ -485,7 +543,7 @@
       .feature-card { padding: 20px; }
       footer .links { gap: 16px; }
       footer .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
-      footer .footer-logo { height: clamp(1.75rem, 8vw, 2.5rem); }
+      footer .footer-logo { height: clamp(2rem, 8vw, 2.85rem); }
     }
   </style>
 </head>
@@ -496,13 +554,16 @@
     <div class="wrap">
     <nav>
       <a href="index.html" class="logo"><img src="images/QObserva_logo.png" alt="QObserva" class="logo-img" /><span>QObserva</span></a>
+      <button type="button" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-links">
         <a href="#how-it-works">How it works</a>
         <a href="#install">Install</a>
         <a href="#sdks">SDKs</a>
         <a href="#features">Features</a>
         <a href="docs.html">Docs</a>
-        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub<svg class="gh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
       </div>
     </nav>
     </div>
@@ -724,6 +785,24 @@
           setTimeout(function() { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
         });
       });
+
+      var hamburger = document.querySelector('.hamburger-btn');
+      var nav = document.querySelector('nav');
+      var navLinks = document.querySelector('.nav-links');
+      if (hamburger && nav) {
+        hamburger.addEventListener('click', function() {
+          nav.classList.toggle('nav-open');
+          hamburger.setAttribute('aria-expanded', nav.classList.contains('nav-open'));
+        });
+        if (navLinks) {
+          navLinks.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', function() {
+              nav.classList.remove('nav-open');
+              hamburger.setAttribute('aria-expanded', 'false');
+            });
+          });
+        }
+      }
     })();
   </script>
 </body>
