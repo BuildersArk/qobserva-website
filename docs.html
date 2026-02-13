@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation — QObserva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-elevated: #111114;
+      --bg-section: #0d0d10;
+      --surface: #16161a;
+      --border: rgba(255,255,255,0.08);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --accent: #06b6d4;
+      --accent-soft: rgba(6, 182, 212, 0.15);
+      --accent-hover: #22d3ee;
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.2);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 60px rgba(6, 182, 212, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.1), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.05), transparent);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    .doc-header {
+      padding: 80px 0 48px;
+      text-align: center;
+    }
+    .doc-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.88) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-header p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .doc-content {
+      padding: 48px 0 80px;
+    }
+    .doc-content h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    .doc-content p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .doc-content ul, .doc-content ol {
+      color: var(--text-muted);
+      margin-left: 24px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .doc-content li {
+      margin-bottom: 8px;
+    }
+    .doc-content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      color: var(--accent);
+    }
+    .doc-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .doc-content pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--text);
+    }
+    .doc-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .doc-content table th,
+    .doc-content table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-content table th {
+      background: var(--bg-section);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .doc-content table td {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .doc-content table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .warning-box {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warning-box strong {
+      color: #fbbf24;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .warning-box p {
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--text);
+    }
+    .card p {
+      margin-bottom: 12px;
+    }
+    .card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .card a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 32px;
+      transition: all 0.2s;
+    }
+    .github-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+    }
+    footer .wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    footer .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    footer .links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    footer .links a:hover { color: var(--accent); }
+    footer .legal {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 0 16px; }
+      .doc-header { padding: 48px 0 32px; }
+      .doc-content { padding: 32px 0 48px; }
+      .doc-content h2 { font-size: 1.5rem; margin-top: 32px; }
+      .doc-content h3 { font-size: 1.1rem; }
+      .nav-links { gap: 16px; font-size: 0.85rem; }
+      footer .links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+    <nav>
+      <a href="index.html" class="logo">QObserva</a>
+      <div class="nav-links">
+        <a href="index.html#how-it-works">How it works</a>
+        <a href="index.html#install">Install</a>
+        <a href="index.html#sdks">SDKs</a>
+        <a href="index.html#features">Features</a>
+        <a href="docs.html" class="active">Docs</a>
+        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="doc-header">
+      <div class="wrap">
+        <h1>Documentation</h1>
+        <p>Get started with QObserva in minutes. Complete guides, examples, and API reference.</p>
+      </div>
+    </div>
+
+    <div class="doc-content wrap">
+      <h2>Quick Start</h2>
+      <p>Get QObserva running in 3 steps:</p>
+
+      <h3>1. Install QObserva</h3>
+      <pre><code>pip install qobserva</code></pre>
+      <p>Or install from source:</p>
+      <pre><code>git clone https://github.com/your-org/qobserva.git
+cd qobserva
+pip install -e packages/qobserva_agent
+pip install -e packages/qobserva_collector
+pip install -e packages/qobserva_local
+pip install -e packages/qobserva</code></pre>
+
+      <h3>2. Start QObserva</h3>
+      <pre><code>qobserva up</code></pre>
+      <p>This starts the collector and dashboard. Open <code>http://localhost:3000</code> in your browser.</p>
+
+      <h3>3. Instrument Your Code</h3>
+      <pre><code>from qobserva import observe_run
+
+@observe_run(
+    project="my_project",
+    tags={"sdk": "qiskit", "algorithm": "bell_state"}
+)
+def my_quantum_algorithm():
+    # Your quantum code here
+    result = execute_circuit()
+    return result</code></pre>
+
+      <div class="warning-box">
+        <strong>⚠️ Important: SDK Tag Required</strong>
+        <p>Always include <code>tags={"sdk": "..."}</code> in your decorator for reliable adapter selection. Supported values: <code>"qiskit"</code>, <code>"braket"</code>, <code>"cirq"</code>, <code>"pennylane"</code>, <code>"pyquil"</code>, <code>"dwave"</code>.</p>
+      </div>
+
+      <h2>Python Version Compatibility</h2>
+      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs)</p>
+      <table>
+        <thead>
+          <tr>
+            <th>SDK</th>
+            <th>Python Version</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Qiskit</strong></td>
+            <td>3.10+</td>
+            <td>Works with Python 3.10-3.14</td>
+          </tr>
+          <tr>
+            <td><strong>Braket</strong></td>
+            <td>3.10 - 3.13</td>
+            <td><strong>Python 3.14+ NOT supported</strong> (Braket SDK uses Pydantic v1)</td>
+          </tr>
+          <tr>
+            <td><strong>Cirq</strong></td>
+            <td>3.10+</td>
+            <td>Works with Python 3.10-3.14</td>
+          </tr>
+          <tr>
+            <td><strong>PennyLane</strong></td>
+            <td>3.10+</td>
+            <td>Works with Python 3.10-3.14</td>
+          </tr>
+          <tr>
+            <td><strong>pyQuil</strong></td>
+            <td>3.10 - 3.12</td>
+            <td><strong>Python 3.13+ NOT supported</strong> (PyQuil 4.x uses PyO3 0.20.3)</td>
+          </tr>
+          <tr>
+            <td><strong>D-Wave</strong></td>
+            <td>3.10+</td>
+            <td>Works with Python 3.10-3.14</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>SDK Examples</h2>
+      <p>QObserva works with all major Python quantum SDKs. Here are quick examples:</p>
+
+      <div class="card">
+        <h3>Qiskit</h3>
+        <pre><code>from qobserva import observe_run
+from qiskit import QuantumCircuit
+from qiskit.primitives import StatevectorSampler
+
+@observe_run(
+    project="qiskit_test",
+    tags={"sdk": "qiskit", "algorithm": "bell_state"}
+)
+def run():
+    qc = QuantumCircuit(2, 2)
+    qc.h(0)
+    qc.cx(0, 1)
+    qc.measure([0, 1], [0, 1])
+    sampler = StatevectorSampler()
+    return sampler.run([qc], shots=1024).result()</code></pre>
+        <p><strong>Requirements:</strong> <code>qiskit>=1.2.0</code></p>
+      </div>
+
+      <div class="card">
+        <h3>Amazon Braket</h3>
+        <pre><code>from qobserva import observe_run
+from braket.circuits import Circuit
+from braket.devices import LocalSimulator
+
+@observe_run(
+    project="braket_test",
+    tags={"sdk": "braket", "algorithm": "bell_state"}
+)
+def run():
+    bell = Circuit().h(0).cnot(0, 1)
+    device = LocalSimulator()
+    return device.run(bell, shots=1024).result()</code></pre>
+        <p><strong>Requirements:</strong> <code>amazon-braket-sdk>=1.80.0</code>, Python 3.13 or earlier</p>
+      </div>
+
+      <div class="card">
+        <h3>Cirq</h3>
+        <pre><code>from qobserva import observe_run
+import cirq
+
+@observe_run(
+    project="cirq_test",
+    tags={"sdk": "cirq", "algorithm": "bell_state"},
+    measurement_key="result"  # Required!
+)
+def run():
+    q0, q1 = cirq.LineQubit(0), cirq.LineQubit(1)
+    circuit = cirq.Circuit()
+    circuit.append(cirq.H(q0))
+    circuit.append(cirq.CNOT(q0, q1))
+    circuit.append(cirq.measure(q0, q1, key='result'))
+    return cirq.Simulator().run(circuit, repetitions=1024)</code></pre>
+        <p><strong>Requirements:</strong> <code>cirq>=1.3.0</code>. <strong>Note:</strong> Must specify <code>measurement_key</code> parameter.</p>
+      </div>
+
+      <div class="card">
+        <h3>PennyLane</h3>
+        <pre><code>from qobserva import observe_run
+import pennylane as qml
+
+@observe_run(
+    project="pennylane_test",
+    tags={"sdk": "pennylane", "algorithm": "bell_state"}
+)
+def run():
+    dev = qml.device("default.qubit", wires=2, shots=1024)
+    @qml.qnode(dev)
+    def circuit():
+        qml.Hadamard(wires=0)
+        qml.CNOT(wires=[0, 1])
+        return qml.counts()
+    return circuit()</code></pre>
+        <p><strong>Requirements:</strong> <code>pennylane>=0.40.0</code></p>
+      </div>
+
+      <div class="card">
+        <h3>pyQuil</h3>
+        <pre><code>from qobserva import observe_run
+from pyquil import Program, get_qc
+from pyquil.gates import H, CNOT, MEASURE
+
+@observe_run(
+    project="pyquil_test",
+    tags={"sdk": "pyquil", "algorithm": "bell_state"}
+)
+def run():
+    program = Program()
+    ro = program.declare("ro", "BIT", 2)
+    program += H(0)
+    program += CNOT(0, 1)
+    program += MEASURE(0, ro[0])
+    program += MEASURE(1, ro[1])
+    qc = get_qc("2q-qvm")
+    program.wrap_in_numshots_loop(1024)
+    return qc.run(program)</code></pre>
+        <p><strong>Requirements:</strong> <code>pyquil>=4.0.0</code>, Python 3.12 or earlier, Rust/Cargo</p>
+      </div>
+
+      <div class="card">
+        <h3>D-Wave</h3>
+        <pre><code>from qobserva import observe_run
+import dimod
+
+@observe_run(
+    project="dwave_test",
+    tags={"sdk": "dwave", "algorithm": "qubo"}
+)
+def run():
+    Q = {(0, 0): -1, (0, 1): 1, (1, 2): 1}
+    bqm = dimod.BinaryQuadraticModel.from_qubo(Q)
+    return dimod.ExactSolver().sample(bqm)</code></pre>
+        <p><strong>Requirements:</strong> <code>dimod>=0.12.20</code></p>
+      </div>
+
+      <h2>API Reference</h2>
+      <h3><code>@observe_run</code> Decorator</h3>
+      <pre><code>@observe_run(
+    project: str,                    # Project name (e.g., "my_project")
+    tags: dict,                      # Tags dict (must include "sdk")
+    benchmark_id: str = None,        # Optional benchmark identifier
+    benchmark_params: dict = None,   # Optional benchmark parameters
+    measurement_key: str = None     # Required for Cirq
+)</code></pre>
+
+      <h3>Parameters</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>project</code></td>
+            <td>str</td>
+            <td>Yes</td>
+            <td>Project name for grouping runs (e.g., <code>"qiskit_test"</code>)</td>
+          </tr>
+          <tr>
+            <td><code>tags</code></td>
+            <td>dict</td>
+            <td>Yes</td>
+            <td>Tags dict. Must include <code>"sdk"</code> key. Recommended: <code>"algorithm"</code>, <code>"test"</code></td>
+          </tr>
+          <tr>
+            <td><code>benchmark_id</code></td>
+            <td>str</td>
+            <td>No</td>
+            <td>Benchmark identifier for comparison</td>
+          </tr>
+          <tr>
+            <td><code>benchmark_params</code></td>
+            <td>dict</td>
+            <td>No</td>
+            <td>Algorithm-specific metrics (e.g., energy values, success rates)</td>
+          </tr>
+          <tr>
+            <td><code>measurement_key</code></td>
+            <td>str</td>
+            <td>Cirq only</td>
+            <td>Measurement key matching <code>cirq.measure()</code> key</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Use Cases</h2>
+      <h3>Algorithm Tagging</h3>
+      <p>Tag your runs with algorithm names to enable algorithm-specific dashboards:</p>
+      <pre><code>tags={
+    "sdk": "qiskit",
+    "algorithm": "vqe",      # Enables algorithm comparison
+    "test": "variational"
+}</code></pre>
+      <p>Common algorithm tags: <code>"bell_state"</code>, <code>"grover"</code>, <code>"vqe"</code>, <code>"qaoa"</code>, <code>"qubo"</code>, <code>"qft"</code></p>
+
+      <h3>Benchmark Parameters</h3>
+      <p>Include algorithm-specific metrics for better analysis:</p>
+      <pre><code>@observe_run(
+    project="vqe_experiment",
+    tags={"sdk": "qiskit", "algorithm": "vqe"},
+    benchmark_id="h2_ground_state",
+    benchmark_params={
+        "energy": -1.137,
+        "convergence_iterations": 10
+    }
+)</code></pre>
+
+      <h2>Viewing Results</h2>
+      <p>After running your instrumented code:</p>
+      <ol>
+        <li>Open <code>http://localhost:3000</code> in your browser</li>
+        <li>Filter by project name (e.g., <code>qiskit_test</code>)</li>
+        <li>View run details, compare runs, and analyze trends</li>
+      </ol>
+
+      <h2>More Documentation</h2>
+      <p>For comprehensive guides, examples, and troubleshooting:</p>
+      <ul>
+        <li><strong>Testing Guide:</strong> Complete setup, deploy, and viewing instructions</li>
+        <li><strong>Examples:</strong> Full SDK examples with proper project names and tags</li>
+        <li><strong>API Reference:</strong> Detailed decorator and adapter documentation</li>
+        <li><strong>Troubleshooting:</strong> Common issues and solutions</li>
+      </ul>
+
+      <a href="https://github.com/BuildersArk/qobserva" class="github-link" target="_blank" rel="noopener">
+        View Full Documentation on GitHub →
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Documentation</a>
+        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/qobserva" target="_blank" rel="noopener">PyPI</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+      <div class="legal">© BuildersArk LLC. QObserva is a product of BuildersArk LLC.</div>
+    </div>
+  </footer>
+</body>
+</html>
