@@ -92,12 +92,22 @@
       border-bottom: 1px solid var(--border);
     }
     .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.5rem, 2vw, 12px);
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1.35rem;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.02em;
+    }
+    .logo .logo-img {
+      height: clamp(1.85rem, 5vw, 2.35rem);
+      width: auto;
+      display: block;
+      object-fit: contain;
+      vertical-align: middle;
     }
     .nav-links { display: flex; gap: 28px; }
     .nav-links a {
@@ -318,6 +328,69 @@
       100% { transform: translateX(-50%); }
     }
 
+    /* Research-focused features — metrics, trends, comparison */
+    .research-section { padding: 72px 0; }
+    .research-section .wrap { max-width: 1100px; margin: 0 auto; }
+    .research-section h2 { margin-bottom: 12px; }
+    .research-section .section-desc {
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .research-card:hover {
+      border-color: rgba(6, 182, 212, 0.35);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .research-card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+    .research-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .research-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .research-card ul {
+      margin: 12px 0 0 16px;
+      padding: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .research-card li { margin-bottom: 4px; }
+    @media (max-width: 768px) {
+      .research-section { padding: 48px 0; }
+      .research-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
     /* Why QObserva — intro paragraph below title, full width */
     .features-section { padding: 72px 0 80px; }
     .features-section .section-desc {
@@ -363,7 +436,24 @@
     footer .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 20px; }
     footer .links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
     footer .links a:hover { color: var(--accent); }
+    footer .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
     footer .legal { font-size: 0.8rem; color: var(--text-muted); opacity: 0.9; }
+    footer .footer-logo {
+      height: clamp(2rem, 5vw, 3rem);
+      width: auto;
+      opacity: 0.9;
+      display: block;
+      object-fit: contain;
+    }
 
     /* Responsive: mobile and tablet */
     @media (max-width: 900px) {
@@ -394,6 +484,8 @@
       .features-grid { grid-template-columns: 1fr; gap: 16px; }
       .feature-card { padding: 20px; }
       footer .links { gap: 16px; }
+      footer .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+      footer .footer-logo { height: clamp(1.75rem, 8vw, 2.5rem); }
     }
   </style>
 </head>
@@ -403,7 +495,7 @@
   <header>
     <div class="wrap">
     <nav>
-      <a href="#" class="logo">QObserva</a>
+      <a href="index.html" class="logo"><img src="images/QObserva_logo.png" alt="QObserva" class="logo-img" /><span>QObserva</span></a>
       <div class="nav-links">
         <a href="#how-it-works">How it works</a>
         <a href="#install">Install</a>
@@ -491,6 +583,58 @@
 
     <div class="section-divider"></div>
 
+    <!-- Metrics and insights for research -->
+    <section class="research-section dark" id="research-features">
+      <div class="wrap">
+        <h2>Metrics and insights for research</h2>
+        <p class="section-desc">The dashboard is built around what researchers need: shots, run-level metrics, measurement outcomes, trends over time, and side-by-side comparison—so you can iterate on experiments and compare backends or algorithms with real data.</p>
+        <div class="research-grid">
+          <div class="research-card">
+            <div class="icon">▣</div>
+            <h3>Shots and run metrics</h3>
+            <p>See total shots, average shots per run, and success rate at a glance. Shots distribution shows how runs are spread across shot counts. Per-run details include runtime, backend, and status—filter by project, provider, or date.</p>
+            <ul>
+              <li>Shots distribution chart and KPI cards</li>
+              <li>Success rate trend over time</li>
+              <li>Run table with status, backend, runtime</li>
+            </ul>
+          </div>
+          <div class="research-card">
+            <div class="icon">◈</div>
+            <h3>Measurement counts and quality</h3>
+            <p>For each run, view measurement outcome histograms (counts per bitstring), top outcomes, and Shannon entropy. Compare result quality across runs or backends. Algorithm-specific metrics: VQE energies, Grover success rates, D-Wave approximation ratios.</p>
+            <ul>
+              <li>Counts histogram and top-k outcomes</li>
+              <li>Entropy and quality metrics</li>
+              <li>Benchmark params (energy, convergence)</li>
+            </ul>
+          </div>
+          <div class="research-card">
+            <div class="icon">↗</div>
+            <h3>Trends over time</h3>
+            <p>Track how experiments evolve: success rate trend, provider performance over time, and average runtime trend. Depth-vs-success and cost-vs-quality scatter plots help you see trade-offs. Backend heatmaps and multi-dimensional radar show performance patterns.</p>
+            <ul>
+              <li>Success rate and runtime trends</li>
+              <li>Circuit depth vs success, cost vs quality</li>
+              <li>Backend heatmap and radar comparison</li>
+            </ul>
+          </div>
+          <div class="research-card">
+            <div class="icon">⇄</div>
+            <h3>Compare runs and SDKs</h3>
+            <p>Select two runs and compare metrics, measurement counts, entropy, and top outcomes side by side. Algorithms dashboard compares the same algorithm across SDKs—success rate, avg shots, avg runtime per provider. Backend performance and cost–quality analysis across your runs.</p>
+            <ul>
+              <li>Side-by-side run comparison (metrics, counts, entropy)</li>
+              <li>Cross-SDK algorithm comparison</li>
+              <li>Backend performance and cost–quality views</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- SDKs: slow marquee -->
     <section class="sdks-section dark" id="sdks">
       <div class="wrap">
@@ -554,13 +698,16 @@
   <footer>
     <div class="wrap">
     <div class="links">
-      <a href="#">Documentation</a>
-      <a href="#">GitHub</a>
-      <a href="#">PyPI</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
+      <a href="docs.html">Documentation</a>
+      <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://pypi.org/project/qobserva" target="_blank" rel="noopener">PyPI</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
     </div>
-    <div class="legal">© BuildersArk LLC. QObserva is a product of BuildersArk LLC.</div>
+    <div class="footer-bottom">
+      <div class="legal">© BuildersArk LLC. QObserva is a product of BuildersArk LLC.</div>
+      <img src="images/BuildersArk.png" alt="Builders Ark LLC" class="footer-logo" />
+    </div>
     </div>
   </footer>
 

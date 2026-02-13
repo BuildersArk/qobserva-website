@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — QObserva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-elevated: #111114;
+      --bg-section: #0d0d10;
+      --surface: #16161a;
+      --border: rgba(255,255,255,0.08);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --accent: #06b6d4;
+      --accent-soft: rgba(6, 182, 212, 0.15);
+      --accent-hover: #22d3ee;
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.2);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 60px rgba(6, 182, 212, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.1), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.05), transparent);
+    }
+    .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.5rem, 2vw, 12px);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .logo .logo-img { height: clamp(1.85rem, 5vw, 2.35rem); width: auto; display: block; object-fit: contain; vertical-align: middle; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    .doc-header { padding: 80px 0 48px; text-align: center; }
+    .doc-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.88) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-header p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+    .doc-header .legal-meta { font-size: 0.9rem; color: var(--text-muted); margin-top: 12px; opacity: 0.9; }
+
+    .doc-content { padding: 48px 0 80px; max-width: 800px; margin: 0 auto; }
+    .doc-content h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    .doc-content p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.7; }
+    .doc-content ul, .doc-content ol { color: var(--text-muted); margin-left: 24px; margin-bottom: 16px; line-height: 1.8; }
+    .doc-content li { margin-bottom: 8px; }
+    .doc-content a { color: var(--accent); text-decoration: none; }
+    .doc-content a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    .notice-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .notice-box p { margin-bottom: 8px; }
+    .notice-box p:last-child { margin-bottom: 0; }
+
+    .warning-box {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warning-box strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+    .warning-box p { color: var(--text-muted); margin: 0; }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      text-align: center;
+    }
+    footer .wrap { display: flex; flex-direction: column; gap: 0; }
+    footer .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    footer .links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    footer .links a:hover { color: var(--accent); }
+    footer .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    footer .legal { color: var(--text-muted); font-size: 0.8rem; opacity: 0.9; }
+    footer .footer-logo { height: clamp(2rem, 5vw, 3rem); width: auto; opacity: 0.9; display: block; object-fit: contain; }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 0 16px; }
+      .doc-header { padding: 48px 0 32px; }
+      .doc-content { padding: 32px 0 48px; }
+      .doc-content h2 { font-size: 1.5rem; margin-top: 32px; }
+      .doc-content h3 { font-size: 1.1rem; }
+      .nav-links { gap: 16px; font-size: 0.85rem; }
+      footer .links { gap: 16px; }
+      footer .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+      footer .footer-logo { height: clamp(1.75rem, 8vw, 2.5rem); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo"><img src="images/QObserva_logo.png" alt="QObserva" class="logo-img" /><span>QObserva</span></a>
+        <div class="nav-links">
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="index.html#install">Install</a>
+          <a href="index.html#sdks">SDKs</a>
+          <a href="index.html#features">Features</a>
+          <a href="docs.html">Docs</a>
+          <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="doc-header">
+      <div class="wrap">
+        <h1>Terms of Use</h1>
+        <p>Legal terms governing your use of the QObserva website and software.</p>
+        <p class="legal-meta">Last updated: January 2026</p>
+      </div>
+    </div>
+
+    <div class="doc-content wrap">
+      <div class="notice-box">
+        <p><strong>Operator:</strong> These Terms of Use (“Terms”) are between you and <strong>BuildersArk LLC</strong> (“BuildersArk,” “we,” “us,” or “our”). QObserva is a brand and open-source project of BuildersArk LLC. By accessing or using the website at qobserva.com (the “Site”), the QObserva software, documentation, or any related services (collectively, the “Services”), you agree to be bound by these Terms. If you do not agree, do not use the Site or Services.</p>
+      </div>
+
+      <div class="warning-box">
+        <strong>Important disclaimers</strong>
+        <p>QObserva was created primarily for learning and educational purposes. The software and Site are provided “as is” without warranties of any kind. We disclaim all liability to the maximum extent permitted by law. We are not legally bound to provide any particular level of service, accuracy, or availability. Please read Sections 5 (Disclaimer of Warranties), 6 (Limitation of Liability), and 7 (Indemnification) carefully.</p>
+      </div>
+
+      <h2>1. Nature of the Project and Services</h2>
+      <p>QObserva is an open-source observability project for quantum computing workflows. BuildersArk LLC makes it available first as open-source software under applicable open-source licenses (e.g., Apache 2.0 or similar, as stated in the respective repositories). The project was initiated for learning and educational purposes. We may, at our sole discretion, introduce paid features, cloud services, or commercial offerings in the future. These Terms apply to your use of the Site and to your use of the free, open-source software and any future paid or additional services we may offer, unless separate terms are presented for those services.</p>
+
+      <h2>2. Use of the Website</h2>
+      <p>The Site is provided for informational purposes only. You may use it to learn about QObserva, access documentation, and download or link to the open-source software, subject to these Terms and any applicable open-source license. You agree not to:</p>
+      <ul>
+        <li>Use the Site or Services for any illegal purpose or in violation of any applicable laws or regulations</li>
+        <li>Attempt to gain unauthorized access to our systems, networks, or other users’ data</li>
+        <li>Transmit malware, viruses, or any harmful or disruptive code</li>
+        <li>Scrape, crawl, or use automated means to access the Site in a manner that burdens our infrastructure or violates our reasonable use policies</li>
+        <li>Impersonate BuildersArk, QObserva, or any other person or entity</li>
+        <li>Use the Site or Services in any way that could damage, disable, or impair the Site or Services or interfere with others’ use</li>
+      </ul>
+      <p>We reserve the right to suspend or terminate your access to the Site or Services, without notice, for conduct we believe violates these Terms or is harmful to others or to us.</p>
+
+      <h2>3. Open-Source Software</h2>
+      <p>The QObserva software (including source code, documentation, and related materials) that we distribute under an open-source license is governed by that license (e.g., Apache License 2.0). Nothing in these Terms limits or alters your rights under that license. These Terms apply in addition to the open-source license for your use of the Site, our provision of the software, and any aspects of the relationship not covered by the open-source license. To the extent of any conflict between these Terms and the open-source license for the software itself, the open-source license controls for the use, modification, and distribution of that code.</p>
+
+      <h2>4. Future Paid or Commercial Services</h2>
+      <p>We may in the future offer paid subscriptions, cloud-hosted features, or other commercial services under the QObserva brand. Those services may be subject to separate terms, pricing, and policies. We are under no obligation to offer any such services or to maintain them once offered. Any transition from free to paid features will be communicated through the Site or other reasonable means. Nothing in these Terms creates an obligation for us to provide any particular paid or free service for any particular period.</p>
+
+      <h2>5. Disclaimer of Warranties</h2>
+      <p><strong>To the maximum extent permitted by applicable law, the Site and Services are provided “as is” and “as available” without warranties of any kind, either express or implied.</strong> We disclaim all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, title, and any warranties arising from course of dealing or usage of trade. We do not warrant that the Site or Services will be uninterrupted, error-free, secure, or free of harmful components. We do not warrant that any content, documentation, or software will be accurate, complete, or suitable for your purposes. You use the Site and Services entirely at your own risk. No advice or information, whether oral or written, obtained from us or through the Site or Services will create any warranty not expressly stated in these Terms. Some jurisdictions do not allow the exclusion of implied warranties, so some of the above exclusions may not apply to you; in such cases, our liability will be limited to the maximum extent permitted by law.</p>
+
+      <h2>6. Limitation of Liability</h2>
+      <p><strong>To the maximum extent permitted by applicable law, in no event shall BuildersArk LLC, its members, officers, employees, agents, affiliates, or licensors be liable for any indirect, incidental, special, consequential, punitive, or exemplary damages</strong>, including but not limited to loss of profits, revenue, data, goodwill, or business opportunity, or for cost of substitute services, arising out of or in connection with your use of or inability to use the Site or Services, even if we have been advised of the possibility of such damages. This applies whether the claim is based on warranty, contract, tort (including negligence), strict liability, or any other theory.</p>
+      <p><strong>Our total aggregate liability for any claims arising out of or related to these Terms, the Site, or the Services shall not exceed the greater of (a) zero United States dollars (US$0), or (b) the amount you actually paid us in the twelve (12) months preceding the claim (if any) for the specific Service that gave rise to the claim.</strong> Because the project is offered in large part for learning and educational purposes and many users do not pay for the open-source software, our liability is intended to be minimal. These limitations apply even if any remedy fails of its essential purpose. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitations may not fully apply to you; in such cases, our liability will be limited to the maximum extent permitted by law.</p>
+
+      <h2>7. Indemnification</h2>
+      <p>You agree to indemnify, defend, and hold harmless BuildersArk LLC and its members, officers, employees, agents, affiliates, and licensors from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys’ fees) arising out of or related to: (a) your use of the Site or Services; (b) your violation of these Terms or any applicable law; (c) your violation of any third-party right, including intellectual property or privacy; (d) any content, data, or materials you submit or use in connection with the Site or Services; or (e) any dispute between you and a third party in connection with your use of the Site or Services. We reserve the right to assume the exclusive defense and control of any matter subject to indemnification by you, at your expense, and you agree to cooperate with our defense. You will not settle any claim that affects us or our rights without our prior written consent.</p>
+
+      <h2>8. No Professional Advice</h2>
+      <p>The Site and Services (including documentation, blog posts, and other content) are for general informational and educational purposes only. They do not constitute legal, financial, tax, technical, or professional advice. You should not rely on them as a substitute for advice from qualified professionals. We are not responsible for any decisions you make based on information on the Site or in the Services. Use of QObserva software in production or in connection with sensitive or regulated systems is at your own risk and responsibility.</p>
+
+      <h2>9. No Obligation to Provide or Maintain Services</h2>
+      <p>We are not legally bound to provide, maintain, or support the Site or the open-source QObserva software. We may, at any time and without notice:</p>
+      <ul>
+        <li>Modify, suspend, or discontinue the Site or any part of the Services</li>
+        <li>Change the features, availability, or pricing of any current or future service</li>
+        <li>Stop distributing or supporting particular versions of the software</li>
+      </ul>
+      <p>We will not be liable to you or any third party for any such modification, suspension, or discontinuation. You are responsible for backing up your data and for any reliance you place on the Site or Services.</p>
+
+      <h2>10. Intellectual Property</h2>
+      <p>Except for content and code made available under an open-source license, the Site and its content (including text, graphics, logos, and design) are owned by BuildersArk LLC or its licensors and are protected by copyright, trademark, and other laws. The QObserva name and brand are used by BuildersArk LLC. You may not use our trademarks, logos, or branding in a way that suggests endorsement or affiliation without our prior written permission. Use of the open-source code is governed by the applicable open-source license.</p>
+
+      <h2>11. Privacy</h2>
+      <p>Your use of the Site and Services is also governed by our <a href="privacy.html">Privacy Policy</a>, which describes how we collect, use, and protect information. By using the Site or Services, you consent to the practices described in the Privacy Policy.</p>
+
+      <h2>12. Governing Law and Disputes</h2>
+      <p>These Terms and any dispute arising out of or related to them, the Site, or the Services shall be governed by and construed in accordance with the laws of the State of Delaware, United States, without regard to its conflict of law principles. Any legal action or proceeding shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction and venue of such courts. Nothing in these Terms limits either party’s right to seek injunctive or other equitable relief in any court of competent jurisdiction. The United Nations Convention on Contracts for the International Sale of Goods does not apply.</p>
+
+      <h2>13. Severability</h2>
+      <p>If any provision of these Terms is held to be invalid, illegal, or unenforceable by a court of competent jurisdiction, such invalidity, illegality, or unenforceability shall not affect any other provision, and these Terms shall be construed as if such provision had never been included. The remaining provisions shall remain in full force and effect.</p>
+
+      <h2>14. Entire Agreement; Waiver</h2>
+      <p>These Terms, together with the Privacy Policy and any other policies we publish on the Site that are expressly incorporated by reference, constitute the entire agreement between you and BuildersArk LLC regarding the Site and Services and supersede any prior agreements or understandings. Our failure to enforce any right or provision of these Terms shall not constitute a waiver of such right or provision. Any waiver must be in writing and signed by us to be effective.</p>
+
+      <h2>15. Changes to These Terms</h2>
+      <p>We may modify these Terms at any time. We will post the updated Terms on this page and update the “Last updated” date. Material changes may be communicated by a notice on the Site or by other reasonable means. Your continued use of the Site or Services after the effective date of the changes constitutes acceptance of the revised Terms. If you do not agree to the new Terms, you must stop using the Site and Services. We encourage you to review this page periodically.</p>
+
+      <h2>16. Contact</h2>
+      <p>If you have questions about these Terms, you may contact us at:</p>
+      <p><strong>BuildersArk LLC</strong><br />
+      Email: <a href="mailto:support@qobserva.com">support@qobserva.com</a></p>
+      <p>We will use reasonable efforts to respond to your inquiry.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Documentation</a>
+        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/qobserva" target="_blank" rel="noopener">PyPI</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </div>
+      <div class="footer-bottom">
+        <div class="legal">© BuildersArk LLC. QObserva is a product of BuildersArk LLC.</div>
+        <img src="images/BuildersArk.png" alt="Builders Ark LLC" class="footer-logo" />
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

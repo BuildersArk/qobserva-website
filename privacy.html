@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — QObserva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-elevated: #111114;
+      --bg-section: #0d0d10;
+      --surface: #16161a;
+      --border: rgba(255,255,255,0.08);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --accent: #06b6d4;
+      --accent-soft: rgba(6, 182, 212, 0.15);
+      --accent-hover: #22d3ee;
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.2);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 60px rgba(6, 182, 212, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.1), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.05), transparent);
+    }
+    .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.5rem, 2vw, 12px);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .logo .logo-img { height: clamp(1.85rem, 5vw, 2.35rem); width: auto; display: block; object-fit: contain; vertical-align: middle; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    .doc-header { padding: 80px 0 48px; text-align: center; }
+    .doc-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.88) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-header p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+    .doc-header .legal-meta { font-size: 0.9rem; color: var(--text-muted); margin-top: 12px; opacity: 0.9; }
+
+    .doc-content { padding: 48px 0 80px; max-width: 800px; margin: 0 auto; }
+    .doc-content h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    .doc-content p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.7; }
+    .doc-content ul, .doc-content ol { color: var(--text-muted); margin-left: 24px; margin-bottom: 16px; line-height: 1.8; }
+    .doc-content li { margin-bottom: 8px; }
+    .doc-content a { color: var(--accent); text-decoration: none; }
+    .doc-content a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    .notice-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .notice-box p { margin-bottom: 8px; }
+    .notice-box p:last-child { margin-bottom: 0; }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      text-align: center;
+    }
+    footer .wrap { display: flex; flex-direction: column; gap: 0; }
+    footer .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    footer .links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    footer .links a:hover { color: var(--accent); }
+    footer .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    footer .legal { color: var(--text-muted); font-size: 0.8rem; opacity: 0.9; }
+    footer .footer-logo { height: clamp(2rem, 5vw, 3rem); width: auto; opacity: 0.9; display: block; object-fit: contain; }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 0 16px; }
+      .doc-header { padding: 48px 0 32px; }
+      .doc-content { padding: 32px 0 48px; }
+      .doc-content h2 { font-size: 1.5rem; margin-top: 32px; }
+      .doc-content h3 { font-size: 1.1rem; }
+      .nav-links { gap: 16px; font-size: 0.85rem; }
+      footer .links { gap: 16px; }
+      footer .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+      footer .footer-logo { height: clamp(1.75rem, 8vw, 2.5rem); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo"><img src="images/QObserva_logo.png" alt="QObserva" class="logo-img" /><span>QObserva</span></a>
+        <div class="nav-links">
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="index.html#install">Install</a>
+          <a href="index.html#sdks">SDKs</a>
+          <a href="index.html#features">Features</a>
+          <a href="docs.html">Docs</a>
+          <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="doc-header">
+      <div class="wrap">
+        <h1>Privacy Policy</h1>
+        <p>How BuildersArk LLC and QObserva collect, use, and protect information.</p>
+        <p class="legal-meta">Last updated: January 2026</p>
+      </div>
+    </div>
+
+    <div class="doc-content wrap">
+      <div class="notice-box">
+        <p><strong>Operator:</strong> This Privacy Policy is issued by <strong>BuildersArk LLC</strong> (“we,” “us,” “our,” or “BuildersArk”). QObserva is a brand and open-source project of BuildersArk LLC. This policy applies to the website at qobserva.com, related online properties we operate, and (where stated) to your use of QObserva software and any future paid or cloud-based services we may offer.</p>
+      </div>
+
+      <h2>1. Introduction and Scope</h2>
+      <p>We are committed to transparency about the limited data we collect and how we use it. QObserva is offered first as an open-source, local-first observability tool for quantum computing workflows. Much of the software runs on your own systems and does not send your runtime data to us. This policy describes:</p>
+      <ul>
+        <li>Information we collect when you visit our website or interact with us online</li>
+        <li>Information related to the open-source QObserva software and any future paid or cloud offerings</li>
+        <li>How we use, store, and share that information</li>
+        <li>Your choices and rights</li>
+      </ul>
+      <p>By using our website or (where applicable) our services, you acknowledge that you have read and understood this Privacy Policy. If you do not agree, please do not use our website or services.</p>
+
+      <h2>2. Information We Collect</h2>
+
+      <h3>2.1 Information You Provide</h3>
+      <p>We may collect information you voluntarily provide when you:</p>
+      <ul>
+        <li>Contact us (e.g., via email or a contact form), including name, email address, and the content of your message</li>
+        <li>Subscribe to newsletters or notifications (if we offer them)</li>
+        <li>Create an account or sign up for a paid or cloud-based QObserva service (when and if we offer such services)</li>
+        <li>Participate in surveys, feedback, or community discussions we host</li>
+      </ul>
+
+      <h3>2.2 Information Collected Automatically (Website)</h3>
+      <p>When you visit qobserva.com or our other sites, we or our service providers may automatically collect:</p>
+      <ul>
+        <li><strong>Log data:</strong> IP address, browser type and version, operating system, referring URLs, pages viewed, date and time of access, and similar technical data</li>
+        <li><strong>Cookies and similar technologies:</strong> We may use cookies, local storage, or similar technologies for essential site operation, analytics (if we use them), and preferences. See Section 5 for more detail.</li>
+      </ul>
+      <p>We do not currently use third-party advertising or tracking for marketing. If we introduce analytics, we will describe them here and, where required, offer opt-out or consent options.</p>
+
+      <h3>2.3 Open-Source and Local-First Software</h3>
+      <p>The core QObserva software is designed to run locally. By default, it does not transmit your quantum run data, metrics, or personally identifiable information to BuildersArk or any third party. If you use only the open-source, local deployment:</p>
+      <ul>
+        <li>We do not collect or store your runtime data, algorithm outputs, or usage patterns from the software itself.</li>
+        <li>Any data processed by the software remains on your systems unless you explicitly configure it to send data elsewhere (e.g., to your own infrastructure).</li>
+      </ul>
+      <p>If we later offer optional cloud features, paid plans, or telemetry, we will update this policy and, where required by law, obtain consent before collecting such data.</p>
+
+      <h2>3. How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Operate, maintain, and improve our website and services</li>
+        <li>Respond to your inquiries and provide support</li>
+        <li>Send administrative or transactional messages (e.g., confirmations, security notices)</li>
+        <li>Comply with applicable laws, regulations, or legal process</li>
+        <li>Protect the rights, property, or safety of BuildersArk, our users, or the public</li>
+        <li>Analyze usage of our website (if we use analytics) to improve content and experience</li>
+        <li>For any other purpose disclosed at the time of collection or with your consent</li>
+      </ul>
+      <p>We do not sell your personal information. We do not use your data for third-party advertising or profiling in ways that would identify you personally, except as described in this policy or with your consent.</p>
+
+      <h2>4. Sharing and Disclosure</h2>
+      <p>We may share information in the following circumstances:</p>
+      <ul>
+        <li><strong>Service providers:</strong> We may use third-party vendors (e.g., hosting, analytics, email delivery) that process data on our behalf under contractual obligations to protect and use data only as we instruct.</li>
+        <li><strong>Legal requirements:</strong> We may disclose information if required by law, court order, subpoena, or government request, or when we believe in good faith that disclosure is necessary to protect rights, safety, or property.</li>
+        <li><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction, subject to the same privacy commitments where practicable.</li>
+        <li><strong>With your consent:</strong> We may share information when you have given us explicit consent.</li>
+      </ul>
+      <p>We do not sell, rent, or trade your personal information to third parties for their marketing purposes.</p>
+
+      <h2>5. Cookies and Similar Technologies</h2>
+      <p>Our website may use cookies and similar technologies (e.g., local storage) for:</p>
+      <ul>
+        <li>Essential operation (e.g., security, load balancing, session management)</li>
+        <li>Preferences (e.g., language or display settings)</li>
+        <li>Analytics (if we use them) to understand how visitors use our site</li>
+      </ul>
+      <p>You can control cookies through your browser settings. Disabling certain cookies may affect site functionality. We do not use cookies for third-party advertising on qobserva.com.</p>
+
+      <h2>6. Data Retention</h2>
+      <p>We retain information only for as long as necessary to fulfill the purposes described in this policy or as required by law. Log data and similar technical information may be retained for a limited period for security and operational purposes. If you contact us, we may retain your communication and contact details for as long as needed to respond and for a reasonable period thereafter for record-keeping. When we no longer need the information, we will delete or anonymize it where feasible.</p>
+
+      <h2>7. Security</h2>
+      <p>We implement reasonable technical and organizational measures to help protect your information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is completely secure. We cannot guarantee absolute security and are not liable for unauthorized access that occurs despite our efforts. You use our website and services at your own risk in this regard.</p>
+
+      <h2>8. Children’s Privacy</h2>
+      <p>Our website and services are not directed to individuals under the age of 13 (or the applicable age of consent in your jurisdiction). We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us and we will take steps to delete it.</p>
+
+      <h2>9. International Transfers</h2>
+      <p>We may store or process information in the United States or other countries where our service providers operate. Laws in those countries may differ from those in your residence. By using our website or services, you consent to the transfer and processing of your information in such jurisdictions. Where required by law, we will implement appropriate safeguards (e.g., standard contractual clauses) for international transfers.</p>
+
+      <h2>10. Your Rights and Choices</h2>
+      <p>Depending on your location, you may have rights to:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
+        <li><strong>Deletion:</strong> Request deletion of your personal information, subject to legal and operational constraints</li>
+        <li><strong>Opt-out:</strong> Opt out of marketing communications (we do not currently engage in marketing email campaigns without consent)</li>
+        <li><strong>Restriction or portability:</strong> Where applicable by law, request restriction of processing or data portability</li>
+      </ul>
+      <p>To exercise these rights, contact us at the email address in Section 13. We will respond within a reasonable time and in accordance with applicable law. You may also have the right to lodge a complaint with a supervisory authority in your jurisdiction.</p>
+
+      <h2>11. Third-Party Links and Services</h2>
+      <p>Our website may contain links to third-party sites (e.g., GitHub, PyPI, documentation repositories, or community resources). We are not responsible for the privacy practices of those sites. We encourage you to read their privacy policies before providing any information. Our policy applies only to our own website and services.</p>
+
+      <h2>12. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will post the updated policy on this page and update the “Last updated” date. Material changes may be communicated via a notice on our website or, where appropriate, by email. Your continued use of our website or services after changes constitutes acceptance of the revised policy. We encourage you to review this page periodically.</p>
+
+      <h2>13. Contact Us</h2>
+      <p>If you have questions about this Privacy Policy or our data practices, you may contact us at:</p>
+      <p><strong>BuildersArk LLC</strong><br />
+      Email: <a href="mailto:support@qobserva.com">support@qobserva.com</a></p>
+      <p>We will use reasonable efforts to respond to your request in a timely manner.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Documentation</a>
+        <a href="https://github.com/BuildersArk/qobserva" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/qobserva" target="_blank" rel="noopener">PyPI</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </div>
+      <div class="footer-bottom">
+        <div class="legal">© BuildersArk LLC. QObserva is a product of BuildersArk LLC.</div>
+        <img src="images/BuildersArk.png" alt="Builders Ark LLC" class="footer-logo" />
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
