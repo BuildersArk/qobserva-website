@@ -267,6 +267,45 @@
     }
     .hero .cta.secondary:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* Two-column: text left, video right (demo section) */
+    .video-section .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .video-section .copy { max-width: 420px; }
+    .video-section .copy .section-desc { margin-bottom: 0; margin-top: 12px; }
+    .video-frame {
+      border-radius: var(--radius);
+      background: #1a1b26;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .video-frame-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.35);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .video-frame-header .file { color: var(--text); font-weight: 500; }
+    .video-frame-body {
+      position: relative;
+      background: #0d0d0f;
+      aspect-ratio: 16 / 9;
+    }
+    .video-frame-body video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     /* Two-column: text left, code right */
     .code-section .wrap {
       display: grid;
@@ -542,11 +581,13 @@
 
     /* Responsive: mobile and tablet */
     @media (max-width: 900px) {
+      .video-section .wrap,
       .code-section .wrap,
       .install-section .wrap {
         grid-template-columns: 1fr;
         gap: 32px;
       }
+      .video-section .copy { max-width: none; }
       .code-section .copy { max-width: none; }
       .install-section .copy { max-width: none; }
     }
@@ -637,30 +678,20 @@
 
     <div class="section-divider"></div>
 
-    <!-- Use it in your code: text LEFT, code RIGHT -->
-    <section class="code-section dark" id="how-it-works">
+    <!-- Demo video: text LEFT, video frame RIGHT -->
+    <section class="video-section dark" id="demo">
       <div class="wrap">
         <div class="copy">
-          <h2>Use it in your code</h2>
-          <p class="section-desc">Wrap any quantum run with <code style="color: var(--accent);">@observe_run</code>. QObserva captures execution, metrics, and results and sends them to your local dashboard. Same API across all SDKs.</p>
+          <h2>See it in action</h2>
+          <p class="section-desc">Watch a quick demo: add <code style="color: var(--accent);">@observe_run</code> to your quantum run, execute your script, and see metrics and insights in the local dashboard.</p>
         </div>
-        <div class="code-frame">
-          <div class="code-frame-header">
-            <span>●</span><span class="file">my_quantum_script.py</span>
+        <div class="video-frame">
+          <div class="video-frame-header">
+            <span>●</span><span class="file">QObserva demo</span>
           </div>
-          <pre class="code-body"><code><span class="ln"> 1</span> <span class="kw">from</span> qobserva <span class="kw">import</span> observe_run
-<span class="ln"> 2</span>
-<span class="ln"> 3</span> <span class="decorator">@observe_run</span>(
-<span class="ln"> 4</span>     project=<span class="str">"my_project"</span>,
-<span class="ln"> 5</span>     tags={<span class="str">"sdk"</span>: <span class="str">"qiskit"</span>, <span class="str">"algorithm"</span>: <span class="str">"vqe"</span>}
-<span class="ln"> 6</span> )
-<span class="ln"> 7</span> <span class="kw">def</span> <span class="fn">run_vqe</span>():
-<span class="ln"> 8</span>     circuit = build_circuit()
-<span class="ln"> 9</span>     result = sampler.run(circuit)
-<span class="ln">10</span>     <span class="kw">return</span> result
-<span class="ln">11</span>
-<span class="ln">12</span> <span class="comment"># Run it — events flow to your dashboard automatically</span>
-<span class="ln">13</span> run_vqe()</code></pre>
+          <div class="video-frame-body">
+            <video src="video/demo.mp4" playsinline muted loop autoplay aria-label="QObserva demo"></video>
+          </div>
         </div>
       </div>
     </section>
@@ -697,8 +728,38 @@
 
     <div class="section-divider"></div>
 
+    <!-- Use it in your code: text LEFT, code RIGHT -->
+    <section class="code-section dark" id="how-it-works">
+      <div class="wrap">
+        <div class="copy">
+          <h2>Use it in your code</h2>
+          <p class="section-desc">Wrap any quantum run with <code style="color: var(--accent);">@observe_run</code>. QObserva captures execution, metrics, and results and sends them to your local dashboard. Same API across all SDKs.</p>
+        </div>
+        <div class="code-frame">
+          <div class="code-frame-header">
+            <span>●</span><span class="file">my_quantum_script.py</span>
+          </div>
+          <pre class="code-body"><code><span class="ln"> 1</span> <span class="kw">from</span> qobserva <span class="kw">import</span> observe_run
+<span class="ln"> 2</span>
+<span class="ln"> 3</span> <span class="decorator">@observe_run</span>(
+<span class="ln"> 4</span>     project=<span class="str">"my_project"</span>,
+<span class="ln"> 5</span>     tags={<span class="str">"sdk"</span>: <span class="str">"qiskit"</span>, <span class="str">"algorithm"</span>: <span class="str">"vqe"</span>}
+<span class="ln"> 6</span> )
+<span class="ln"> 7</span> <span class="kw">def</span> <span class="fn">run_vqe</span>():
+<span class="ln"> 8</span>     circuit = build_circuit()
+<span class="ln"> 9</span>     result = sampler.run(circuit)
+<span class="ln">10</span>     <span class="kw">return</span> result
+<span class="ln">11</span>
+<span class="ln">12</span> <span class="comment"># Run it — events flow to your dashboard automatically</span>
+<span class="ln">13</span> run_vqe()</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- Metrics and insights for research -->
-    <section class="research-section dark" id="research-features">
+    <section class="research-section" id="research-features">
       <div class="wrap">
         <h2>Metrics and insights for research</h2>
         <p class="section-desc">The dashboard is built around what researchers need: shots, run-level metrics, measurement outcomes, trends over time, and side-by-side comparison—so you can iterate on experiments and compare backends or algorithms with real data.</p>
