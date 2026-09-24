@@ -277,6 +277,15 @@
     .card p {
       margin-bottom: 12px;
     }
+    .doc-content a:not(.github-link) {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .doc-content a:not(.github-link):hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
     .card a {
       color: var(--accent);
       text-decoration: none;
@@ -422,21 +431,21 @@
 
     <div class="doc-content wrap">
       <h2>Quick Start</h2>
-      <p>Get QObserva running in 3 steps:</p>
+      <p>Get QObserva running in 3 steps. Current release: <strong>qobserva 0.1.6</strong> (<a href="https://github.com/BuildersArk/qobserva/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>).</p>
 
       <h3>1. Install QObserva</h3>
-      <pre><code>pip install qobserva</code></pre>
+      <p>Install QObserva together with the adapter extras for the SDK you use:</p>
+      <pre><code>pip install qobserva "qobserva-agent[qiskit]"</code></pre>
+      <p>Replace <code>qiskit</code> with <code>braket</code>, <code>cirq</code>, <code>pennylane</code>, <code>pyquil</code> or <code>dwave</code>, or use <code>all-sdks</code> for all six. The dashboard is prebuilt, so no Node.js is needed. Python 3.12 supports every SDK (see <a href="#python-compatibility">Python compatibility</a>).</p>
       <p>Or install from source:</p>
-      <pre><code>git clone https://github.com/your-org/qobserva.git
+      <pre><code>git clone https://github.com/BuildersArk/qobserva.git
 cd qobserva
-pip install -e packages/qobserva_agent
-pip install -e packages/qobserva_collector
-pip install -e packages/qobserva_local
-pip install -e packages/qobserva</code></pre>
+pip install -e packages/qobserva_agent -e packages/qobserva_collector -e packages/qobserva_local -e packages/qobserva
+cd packages/qobserva_ui_react &amp;&amp; npm install   # dashboard dev server (needs Node.js)</code></pre>
 
       <h3>2. Start QObserva</h3>
       <pre><code>qobserva up</code></pre>
-      <p>This starts the collector and dashboard. Open <code>http://localhost:3000</code> in your browser.</p>
+      <p>This starts the collector (<code>http://127.0.0.1:8080</code>) and the dashboard. Open <code>http://localhost:3000</code> in your browser. Stop everything with <code>qobserva down</code> from another terminal, or Ctrl+C. If QObserva is already running, <code>qobserva up</code> tells you where instead of starting a second copy.</p>
 
       <h3>3. Instrument Your Code</h3>
       <pre><code>from qobserva import observe_run
@@ -448,61 +457,43 @@ pip install -e packages/qobserva</code></pre>
 def my_quantum_algorithm():
     # Your quantum code here
     result = execute_circuit()
-    return result</code></pre>
+    return result
+
+my_quantum_algorithm()</code></pre>
+      <p>Return the SDK's result object from the decorated function. QObserva records the run in the background, so your program never waits for it. If the collector isn't running, you get one warning and your code carries on.</p>
 
       <div class="warning-box">
         <strong>⚠️ Important: SDK Tag Required</strong>
         <p>Always include <code>tags={"sdk": "..."}</code> in your decorator for reliable adapter selection. Supported values: <code>"qiskit"</code>, <code>"braket"</code>, <code>"cirq"</code>, <code>"pennylane"</code>, <code>"pyquil"</code>, <code>"dwave"</code>.</p>
       </div>
 
-      <h2>Python Version Compatibility</h2>
-      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs)</p>
+      <h2 id="python-compatibility">Python Version Compatibility</h2>
+      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs). Each SDK's example was run on Python 3.12, 3.13 and 3.14 with QObserva 0.1.6 (September 2026):</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>SDK</th>
-              <th>Python Version</th>
-              <th>Notes</th>
+              <th>Version tested</th>
+              <th>3.12</th>
+              <th>3.13</th>
+              <th>3.14</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Qiskit</strong></td>
-              <td>3.10+</td>
-              <td>Works with Python 3.10-3.14</td>
-            </tr>
-            <tr>
-              <td><strong>Braket</strong></td>
-              <td>3.10 - 3.13</td>
-              <td><strong>Python 3.14+ NOT supported</strong> (Braket SDK uses Pydantic v1)</td>
-            </tr>
-            <tr>
-              <td><strong>Cirq</strong></td>
-              <td>3.10+</td>
-              <td>Works with Python 3.10-3.14</td>
-            </tr>
-            <tr>
-              <td><strong>PennyLane</strong></td>
-              <td>3.10+</td>
-              <td>Works with Python 3.10-3.14</td>
-            </tr>
-            <tr>
-              <td><strong>pyQuil</strong></td>
-              <td>3.10 - 3.12</td>
-              <td><strong>Python 3.13+ NOT supported</strong> (PyQuil 4.x uses PyO3 0.20.3)</td>
-            </tr>
-            <tr>
-              <td><strong>D-Wave</strong></td>
-              <td>3.10+</td>
-              <td>Works with Python 3.10-3.14</td>
-            </tr>
+            <tr><td><strong>Qiskit</strong></td><td>2.5.2</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td><strong>Braket</strong></td><td>1.127</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td><strong>Cirq</strong></td><td>1.7.0</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td><strong>PennyLane</strong></td><td>0.45.1</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td><strong>pyQuil</strong></td><td>4.20 / 4.21</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><strong>D-Wave</strong> (dimod)</td><td>0.12.22</td><td>✅</td><td>✅</td><td>✅</td></tr>
           </tbody>
         </table>
       </div>
+      <p>pyQuil itself supports only Python 3.11–3.12, so <code>qobserva-agent[pyquil]</code> skips it on 3.13 and later. QObserva's own packages support Python 3.10+.</p>
 
       <h2>SDK Examples</h2>
-      <p>QObserva works with all major Python quantum SDKs. Here are quick examples:</p>
+      <p>Each example below is complete: save it as a file, start <code>qobserva up</code>, and run it. The same examples are in the <a href="https://github.com/BuildersArk/qobserva/tree/main/examples" target="_blank" rel="noopener">examples folder</a> on GitHub.</p>
 
       <div class="card">
         <h3>Qiskit</h3>
@@ -512,7 +503,10 @@ from qiskit.primitives import StatevectorSampler
 
 @observe_run(
     project="qiskit_test",
-    tags={"sdk": "qiskit", "algorithm": "bell_state"}
+    tags={"sdk": "qiskit", "algorithm": "bell_state"},
+    benchmark_params={"target_bitstrings": ["00", "11"]},
+    backend="statevector_sampler",  # V2 primitive results don't name their backend
+    provider="local_sim",
 )
 def run():
     qc = QuantumCircuit(2, 2)
@@ -520,8 +514,10 @@ def run():
     qc.cx(0, 1)
     qc.measure([0, 1], [0, 1])
     sampler = StatevectorSampler()
-    return sampler.run([qc], shots=1024).result()</code></pre>
-        <p><strong>Requirements:</strong> <code>qiskit>=1.2.0</code></p>
+    return sampler.run([qc], shots=1024).result()
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[qiskit]"</code>. <strong>Backends:</strong> Aer runs are labeled <code>local_sim / aer_simulator</code> automatically. For IBM hardware, return the job and set <code>await_result=True</code>, or pass <code>backend=service.backend("ibm_...")</code>.</p>
       </div>
 
       <div class="card">
@@ -532,13 +528,16 @@ from braket.devices import LocalSimulator
 
 @observe_run(
     project="braket_test",
-    tags={"sdk": "braket", "algorithm": "bell_state"}
+    tags={"sdk": "braket", "algorithm": "bell_state"},
+    benchmark_params={"target_bitstrings": ["00", "11"]},
 )
 def run():
     bell = Circuit().h(0).cnot(0, 1)
     device = LocalSimulator()
-    return device.run(bell, shots=1024).result()</code></pre>
-        <p><strong>Requirements:</strong> <code>amazon-braket-sdk>=1.80.0</code>, Python 3.13 or earlier</p>
+    return device.run(bell, shots=1024).result()
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[braket]"</code>. Works on Python 3.12–3.14. No AWS credentials needed for LocalSimulator.</p>
       </div>
 
       <div class="card">
@@ -549,16 +548,19 @@ import cirq
 @observe_run(
     project="cirq_test",
     tags={"sdk": "cirq", "algorithm": "bell_state"},
-    measurement_key="result"  # Required!
+    measurement_key="result",  # Required! Must match cirq.measure(..., key=...)
+    benchmark_params={"target_bitstrings": ["00", "11"]},
 )
 def run():
     q0, q1 = cirq.LineQubit(0), cirq.LineQubit(1)
     circuit = cirq.Circuit()
     circuit.append(cirq.H(q0))
     circuit.append(cirq.CNOT(q0, q1))
-    circuit.append(cirq.measure(q0, q1, key='result'))
-    return cirq.Simulator().run(circuit, repetitions=1024)</code></pre>
-        <p><strong>Requirements:</strong> <code>cirq>=1.3.0</code>. <strong>Note:</strong> Must specify <code>measurement_key</code> parameter.</p>
+    circuit.append(cirq.measure(q0, q1, key="result"))
+    return cirq.Simulator().run(circuit, repetitions=1024)
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[cirq]"</code>. <strong>Note:</strong> the <code>measurement_key</code> parameter is required.</p>
       </div>
 
       <div class="card">
@@ -568,7 +570,8 @@ import pennylane as qml
 
 @observe_run(
     project="pennylane_test",
-    tags={"sdk": "pennylane", "algorithm": "bell_state"}
+    tags={"sdk": "pennylane", "algorithm": "bell_state"},
+    benchmark_params={"target_bitstrings": ["00", "11"]},
 )
 def run():
     dev = qml.device("default.qubit", wires=2, shots=1024)
@@ -577,8 +580,10 @@ def run():
         qml.Hadamard(wires=0)
         qml.CNOT(wires=[0, 1])
         return qml.counts()
-    return circuit()</code></pre>
-        <p><strong>Requirements:</strong> <code>pennylane>=0.40.0</code></p>
+    return circuit()
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[pennylane]"</code>. Works with <code>qml.counts()</code> and <code>qml.expval()</code>.</p>
       </div>
 
       <div class="card">
@@ -589,7 +594,10 @@ from pyquil.gates import H, CNOT, MEASURE
 
 @observe_run(
     project="pyquil_test",
-    tags={"sdk": "pyquil", "algorithm": "bell_state"}
+    tags={"sdk": "pyquil", "algorithm": "bell_state"},
+    benchmark_params={"target_bitstrings": ["00", "11"]},
+    backend="2q-qvm",
+    provider="local_sim",
 )
 def run():
     program = Program()
@@ -598,10 +606,12 @@ def run():
     program += CNOT(0, 1)
     program += MEASURE(0, ro[0])
     program += MEASURE(1, ro[1])
-    qc = get_qc("2q-qvm")
     program.wrap_in_numshots_loop(1024)
-    return qc.run(program)</code></pre>
-        <p><strong>Requirements:</strong> <code>pyquil>=4.0.0</code>, Python 3.12 or earlier, Rust/Cargo</p>
+    qc = get_qc("2q-qvm")
+    return qc.run(qc.compile(program))
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[pyquil]"</code> on Python 3.11–3.12. pyQuil needs Rigetti's QVM and quilc servers, e.g. <code>docker run -d -p 5000:5000 rigetti/qvm -S</code> and <code>docker run -d -p 5555:5555 rigetti/quilc -R</code>.</p>
       </div>
 
       <div class="card">
@@ -611,23 +621,33 @@ import dimod
 
 @observe_run(
     project="dwave_test",
-    tags={"sdk": "dwave", "algorithm": "qubo"}
+    tags={"sdk": "dwave", "algorithm": "qubo"},
+    backend="ExactSolver",  # a SampleSet doesn't say which sampler produced it
+    provider="local_sim",
 )
 def run():
     Q = {(0, 0): -1, (0, 1): 1, (1, 2): 1}
     bqm = dimod.BinaryQuadraticModel.from_qubo(Q)
-    return dimod.ExactSolver().sample(bqm)</code></pre>
-        <p><strong>Requirements:</strong> <code>dimod>=0.12.20</code></p>
+    return dimod.ExactSolver().sample(bqm)
+
+run()</code></pre>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[dwave]"</code>. QObserva records the lowest energy. Add <code>"ground_state_energy"</code> to <code>benchmark_params</code> to get an approximation ratio.</p>
       </div>
 
       <h2>API Reference</h2>
       <h3><code>@observe_run</code> Decorator</h3>
       <pre><code>@observe_run(
-    project: str,                    # Project name (e.g., "my_project")
-    tags: dict,                      # Tags dict (must include "sdk")
-    benchmark_id: str = None,        # Optional benchmark identifier
-    benchmark_params: dict = None,   # Optional benchmark parameters
-    measurement_key: str = None     # Required for Cirq
+    project: str,                     # Project name (e.g., "my_project")
+    tags: dict = None,                # Tags dict (must include "sdk")
+    capture_program: str = "hash",    # "hash", "none" or "attachment"
+    await_result: bool = False,       # Call .result() on a returned job
+    measurement_key: str = None,      # Required for Cirq
+    benchmark_id: str = None,         # Optional benchmark identifier
+    benchmark_params: dict = None,    # Optional benchmark parameters
+    endpoint: str = None,             # Collector URL (default: local collector)
+    api_key: str = None,              # Token if the collector requires one
+    backend = None,                   # Backend object or name, if the result doesn't say
+    provider: str = None,             # Provider label, e.g. "ibm", "aws_braket", "local_sim"
 )</code></pre>
 
       <h3>Parameters</h3>
@@ -655,6 +675,18 @@ def run():
               <td>Tags dict. Must include <code>"sdk"</code> key. Recommended: <code>"algorithm"</code>, <code>"test"</code></td>
             </tr>
             <tr>
+              <td><code>await_result</code></td>
+              <td>bool</td>
+              <td>No</td>
+              <td>If your function returns a job, QObserva calls <code>.result()</code> and records the job's backend (e.g. IBM Runtime, Aer). The decorated function then returns the result.</td>
+            </tr>
+            <tr>
+              <td><code>measurement_key</code></td>
+              <td>str</td>
+              <td>Cirq only</td>
+              <td>Measurement key matching <code>cirq.measure()</code> key</td>
+            </tr>
+            <tr>
               <td><code>benchmark_id</code></td>
               <td>str</td>
               <td>No</td>
@@ -664,17 +696,69 @@ def run():
               <td><code>benchmark_params</code></td>
               <td>dict</td>
               <td>No</td>
-              <td>Algorithm-specific metrics (e.g., energy values, success rates)</td>
+              <td>Algorithm-specific values. <code>"target_bitstrings"</code> enables the success-probability metric; <code>"ground_state_energy"</code> enables the approximation ratio.</td>
             </tr>
             <tr>
-              <td><code>measurement_key</code></td>
+              <td><code>backend</code></td>
+              <td>object or str</td>
+              <td>No</td>
+              <td>The backend the run executed on, when the SDK result doesn't include it (e.g. <code>AerSimulator()</code>, <code>service.backend("ibm_brisbane")</code>, <code>"statevector_sampler"</code>)</td>
+            </tr>
+            <tr>
+              <td><code>provider</code></td>
               <td>str</td>
-              <td>Cirq only</td>
-              <td>Measurement key matching <code>cirq.measure()</code> key</td>
+              <td>No</td>
+              <td>Provider label to record, e.g. <code>"ibm"</code>, <code>"aws_braket"</code>, <code>"local_sim"</code></td>
+            </tr>
+            <tr>
+              <td><code>endpoint</code>, <code>api_key</code></td>
+              <td>str</td>
+              <td>No</td>
+              <td>Send runs to a different collector, or authenticate with one that requires a token</td>
+            </tr>
+            <tr>
+              <td><code>capture_program</code></td>
+              <td>str</td>
+              <td>No</td>
+              <td>How the program is captured: <code>"hash"</code> (default), <code>"none"</code> or <code>"attachment"</code></td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <h3>Provider and backend labels</h3>
+      <p>QObserva records the provider and backend that the SDK's result actually reports. When the result doesn't say, you'll see <code>unknown</code> rather than a guess; pass <code>backend=</code> and <code>provider=</code> to label those runs. Examples: Aer and IBM's fake backends are <code>local_sim</code>, IBM hardware is <code>ibm</code> with the device name, Braket's LocalSimulator is <code>local_sim</code>, AWS-managed simulators are <code>aws_braket</code>, and the Rigetti QVM is <code>local_sim</code>.</p>
+
+      <h2>Configuration</h2>
+      <p>Everything works with the defaults. These environment variables change them:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>QOBSERVA_ENDPOINT</code></td><td>local collector</td><td>Where your code sends runs (<code>http://127.0.0.1:8080/v1/ingest/run-event</code>)</td></tr>
+            <tr><td><code>QOBSERVA_HOST_MODE</code></td><td><code>hash</code></td><td>Machine identity on each run: <code>hash</code>, <code>raw</code> (hostname) or <code>none</code></td></tr>
+            <tr><td><code>QOBSERVA_ASYNC</code></td><td><code>1</code></td><td>Set to <code>0</code> to send each run before your function returns</td></tr>
+            <tr><td><code>QOBSERVA_DATA_DIR</code></td><td>user data folder</td><td>Where the collector stores its database and run data</td></tr>
+            <tr><td><code>QOBSERVA_COLLECTOR_PORT</code>, <code>QOBSERVA_UI_PORT</code></td><td><code>8080</code>, <code>3000</code></td><td>Ports used by <code>qobserva up</code></td></tr>
+            <tr><td><code>QOBSERVA_LOCAL_TOKEN</code></td><td>unset</td><td>When set, the collector requires this token (the dashboard passes it automatically)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>In a notebook or test that reads runs back immediately, call <code>qobserva.flush()</code> to wait until pending runs are delivered. The full list is in the <a href="https://github.com/BuildersArk/qobserva/blob/main/docs/API_REFERENCE.md#environment-variables" target="_blank" rel="noopener">API reference</a>.</p>
+
+      <h2>Privacy and Security</h2>
+      <ul>
+        <li>Everything runs on your machine. Nothing is sent to BuildersArk or any third party.</li>
+        <li>Secret values in error messages (API keys, tokens, passwords) are redacted before they're stored.</li>
+        <li>The machine's hostname is stored as a hash by default.</li>
+        <li>Only pages on your own machine can send data to the collector, so websites you visit can't.</li>
+      </ul>
 
       <h2>Common Use Cases</h2>
       <h3>Algorithm Tagging</h3>
@@ -706,13 +790,23 @@ def run():
         <li>View run details, compare runs, and analyze trends</li>
       </ol>
 
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>"could not record run telemetry … Is the collector running?"</strong> Start it with <code>qobserva up</code>; your program itself is unaffected.</li>
+        <li><strong>"Cannot start QObserva: … port … already in use"</strong> Another program uses port 8080 or 3000. Free it, or set <code>QOBSERVA_COLLECTOR_PORT</code> / <code>QOBSERVA_UI_PORT</code> (and point your code at the new collector with <code>QOBSERVA_ENDPOINT</code>).</li>
+        <li><strong>pyQuil fails on Python 3.13+</strong> Use a Python 3.12 environment; pyQuil doesn't support newer versions yet.</li>
+        <li><strong>Windows: "DLL load failed … filename or extension is too long" (D-Wave)</strong> Create your virtual environment in a shorter folder path.</li>
+      </ul>
+
       <h2>More Documentation</h2>
       <p>For comprehensive guides, examples, and troubleshooting:</p>
       <ul>
-        <li><strong>Testing Guide:</strong> Complete setup, deploy, and viewing instructions</li>
-        <li><strong>Examples:</strong> Full SDK examples with proper project names and tags</li>
-        <li><strong>API Reference:</strong> Detailed decorator and adapter documentation</li>
-        <li><strong>Troubleshooting:</strong> Common issues and solutions</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/blob/main/docs/GETTING_STARTED.md" target="_blank" rel="noopener">Getting Started</a>:</strong> Install, start, and your first observed run</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/blob/main/docs/TESTING_GUIDE.md" target="_blank" rel="noopener">Testing Guide</a>:</strong> Complete setup, deploy, and viewing instructions</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/tree/main/examples" target="_blank" rel="noopener">Examples</a>:</strong> Full SDK examples with proper project names and tags</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/blob/main/docs/API_REFERENCE.md" target="_blank" rel="noopener">API Reference</a>:</strong> Detailed decorator, settings and labeling documentation</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/blob/main/docs/SDK_COMPATIBILITY.md" target="_blank" rel="noopener">SDK Compatibility</a>:</strong> Python and SDK version matrix</li>
+        <li><strong><a href="https://github.com/BuildersArk/qobserva/blob/main/docs/TROUBLESHOOTING.md" target="_blank" rel="noopener">Troubleshooting</a>:</strong> Common issues and solutions</li>
       </ul>
 
       <a href="https://github.com/BuildersArk/qobserva" class="github-link" target="_blank" rel="noopener">

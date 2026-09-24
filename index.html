@@ -717,11 +717,12 @@
               <span class="cmd" id="cmd2">qobserva up</span>
             </div>
             <div class="hint">Dashboard at http://localhost:3000</div>
+            <div class="hint">SDK extras: pip install "qobserva-agent[qiskit]" (or braket, cirq, pennylane, pyquil, dwave, all-sdks)</div>
           </div>
         </div>
         <div class="copy">
           <h2>Get running</h2>
-          <p class="section-desc">Install QObserva with pip, then start the local collector and dashboard. Open your browser to see runs, metrics, and analytics.</p>
+          <p class="section-desc">Install QObserva with pip, then start the local collector and dashboard. Open your browser to see runs, metrics, and analytics. Stop everything with <code style="color: var(--accent);">qobserva down</code>.</p>
         </div>
       </div>
     </section>
@@ -818,18 +819,18 @@
         <div class="sdks-marquee-wrap">
           <div class="sdks-marquee">
             <!-- Braket, PennyLane, PyQuil: logo + name. Cirq: logo + name. Qiskit: logo (light) + name. D-Wave: logo only. -->
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Braket" /><span class="sdk-name">Braket</span></span>
-            <span class="sdk-pill"><img src="https://quantumai.google/static/site-assets/images/marketing/icons/shared-ic-cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
-            <span class="sdk-pill"><img src="https://raw.githubusercontent.com/PennyLaneAI/pennylane/master/doc/_static/favicon.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/5449030?s=48&v=4" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
-            <span class="sdk-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Qiskit-Logo.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/124312882?v=4" alt="Braket" /><span class="sdk-name">Braket</span></span>
-            <span class="sdk-pill"><img src="https://quantumai.google/static/site-assets/images/marketing/icons/shared-ic-cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
-            <span class="sdk-pill"><img src="https://raw.githubusercontent.com/PennyLaneAI/pennylane/master/doc/_static/favicon.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/16469771?v=4" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
-            <span class="sdk-pill"><img src="https://avatars.githubusercontent.com/u/5449030?s=48&v=4" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
+            <span class="sdk-pill"><img src="images/sdk/qiskit.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
+            <span class="sdk-pill"><img src="images/sdk/braket.png" alt="Braket" /><span class="sdk-name">Braket</span></span>
+            <span class="sdk-pill"><img src="images/sdk/cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
+            <span class="sdk-pill"><img src="images/sdk/pennylane.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
+            <span class="sdk-pill"><img src="images/sdk/pyquil.png" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
+            <span class="sdk-pill"><img src="images/sdk/dwave.png" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
+            <span class="sdk-pill"><img src="images/sdk/qiskit.svg" alt="Qiskit" class="sdk-logo-light" /><span class="sdk-name">Qiskit</span></span>
+            <span class="sdk-pill"><img src="images/sdk/braket.png" alt="Braket" /><span class="sdk-name">Braket</span></span>
+            <span class="sdk-pill"><img src="images/sdk/cirq.png" alt="Cirq" /><span class="sdk-name">Cirq</span></span>
+            <span class="sdk-pill"><img src="images/sdk/pennylane.ico" alt="PennyLane" /><span class="sdk-name">PennyLane</span></span>
+            <span class="sdk-pill"><img src="images/sdk/pyquil.png" alt="PyQuil" /><span class="sdk-name">PyQuil</span></span>
+            <span class="sdk-pill"><img src="images/sdk/dwave.png" alt="D-Wave" /><span class="sdk-name">D-Wave</span></span>
           </div>
         </div>
         <p class="section-disclaimer"><sup>*</sup> Compatibility, supported adapters, and parameters vary by SDK. See the <a href="docs.html" class="disclaimer-link">documentation</a> for your SDK for details.</p>
@@ -852,7 +853,7 @@
         <div class="feature-card">
           <div class="icon">◇</div>
           <h3>Local-first</h3>
-          <p>Runs on your machine. Your data stays private; no cloud or account required.</p>
+          <p>Runs on your machine. Your data stays private; no cloud or account required. Telemetry is sent in the background so it never slows your runs, secrets in error messages are redacted, and hostnames are stored as a hash.</p>
         </div>
         <div class="feature-card">
           <div class="icon">▣</div>
