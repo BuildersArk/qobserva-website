@@ -174,8 +174,12 @@
     /* Hero — more wording, catchier tagline */
     .hero {
       text-align: center;
-      padding: 72px 0 64px;
+      padding: 96px 0 88px;
+      min-height: clamp(560px, 86vh, 900px);
+      display: flex;
+      align-items: center;
     }
+    .hero > .wrap { width: 100%; }
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2.25rem, 5.5vw, 3.5rem);
@@ -209,10 +213,14 @@
       user-select: none;
     }
     .hero .hero-copy {
-      max-width: 100%;
+      max-width: 820px;
       margin-left: auto;
       margin-right: auto;
-      text-align: justify;
+      text-align: center;
+    }
+    .hero .intro code {
+      color: var(--accent);
+      font-size: 0.95em;
     }
     .hero .intro {
       font-size: 1.05rem;
@@ -239,6 +247,36 @@
     .hero .intro .sdk-names {
       font-weight: 600;
       color: #fff;
+    }
+    .hero .hero-sdks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 8px auto 28px;
+      max-width: 760px;
+    }
+    .hero .hero-sdk {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .hero .hero-sdk img {
+      height: 20px;
+      width: auto;
+      max-width: 72px;
+      object-fit: contain;
+    }
+    .hero .hero-sdk img.sdk-logo-light {
+      filter: brightness(0) invert(1);
+      opacity: 0.95;
     }
     .hero .cta {
       display: inline-flex;
@@ -619,13 +657,16 @@
         font-size: 1rem;
       }
       .nav-links a:last-child { border-bottom: none; }
-      .hero { padding: 48px 0 40px; }
-      .hero .hero-copy { text-align: left; }
+      .hero { padding: 64px 0 56px; min-height: auto; }
+      .hero .hero-copy { text-align: center; }
+      .hero .hero-sdks { gap: 8px; margin-bottom: 24px; }
+      .hero .hero-sdk { padding: 7px 11px; font-size: 0.85rem; }
+      .hero .hero-sdk img { height: 18px; }
       .hero h1 { font-size: clamp(2.25rem, 10vw, 2.75rem); margin-bottom: 16px; }
       .hero .tagline { font-size: 1.15rem; }
       .hero .intro { font-size: 1rem; max-width: 100%; margin-left: 0; margin-right: 0; }
       .hero .cta { padding: 14px 20px; min-height: 48px; }
-      .hero .cta.secondary { margin-left: 0; margin-top: 10px; }
+      .hero .cta.secondary { margin-left: 8px; margin-top: 10px; }
       .code-frame .code-body { font-size: 0.8rem; padding: 16px; }
       .terminal-body { padding: 18px 20px; font-size: 0.9rem; }
       .terminal .cmd { word-break: break-all; }
@@ -668,8 +709,18 @@
       <h1>Observability for every quantum SDK</h1>
       <p class="tagline">One decorator<span class="tagline-dot">·</span>One dashboard<span class="tagline-dot">·</span><span class="tagline-accent">Every run.</span></p>
       <div class="hero-copy">
-        <p class="intro">QObserva gives you metrics, traces, and insights for your quantum programs—whether you use <strong class="sdk-names">Qiskit</strong>, <strong class="sdk-names">Braket</strong>, <strong class="sdk-names">Cirq</strong>, <strong class="sdk-names">PennyLane</strong>, <strong class="sdk-names">PyQuil</strong>, or <strong class="sdk-names">D-Wave</strong>. Add a single decorator to your runs and see success rates, runtime, and analytics in a local dashboard.</p>
-        <p class="intro hero-shine">Everything runs on your machine. No cloud, no account. One install and one command to get started.</p>
+        <p class="intro">Add <code>@observe_run</code> to any quantum run and see success rates, runtime and results in a local dashboard.</p>
+      </div>
+      <div class="hero-sdks" aria-label="Supported SDKs">
+        <span class="hero-sdk"><img src="images/sdk/qiskit.svg" alt="" class="sdk-logo-light" />Qiskit</span>
+        <span class="hero-sdk"><img src="images/sdk/braket.png" alt="" />Braket</span>
+        <span class="hero-sdk"><img src="images/sdk/cirq.png" alt="" />Cirq</span>
+        <span class="hero-sdk"><img src="images/sdk/pennylane.ico" alt="" />PennyLane</span>
+        <span class="hero-sdk"><img src="images/sdk/pyquil.png" alt="" />PyQuil</span>
+        <span class="hero-sdk"><img src="images/sdk/dwave.png" alt="" />D-Wave</span>
+      </div>
+      <div class="hero-copy">
+        <p class="intro hero-shine">Runs on your machine. No cloud, no account.</p>
       </div>
       <a href="#how-it-works" class="cta">See how it works</a>
       <a href="#install" class="cta secondary">Install</a>
