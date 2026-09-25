@@ -431,7 +431,7 @@
 
     <div class="doc-content wrap">
       <h2>Quick Start</h2>
-      <p>Get QObserva running in 3 steps. Current release: <strong>qobserva 0.1.6</strong> (<a href="https://github.com/BuildersArk/qobserva/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>).</p>
+      <p>Get QObserva running in 3 steps. Current release: <strong>qobserva 0.1.7</strong> (<a href="https://github.com/BuildersArk/qobserva/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>).</p>
 
       <h3>1. Install QObserva</h3>
       <p>Install QObserva together with the adapter extras for the SDK you use:</p>
@@ -468,7 +468,7 @@ my_quantum_algorithm()</code></pre>
       </div>
 
       <h2 id="python-compatibility">Python Version Compatibility</h2>
-      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs). Each SDK's example was run on Python 3.12, 3.13 and 3.14 with QObserva 0.1.6 (September 2026):</p>
+      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs). Each SDK's example was run on Python 3.12, 3.13 and 3.14 in September 2026 (QObserva 0.1.6; the SDK adapters are unchanged in 0.1.7, which was re-checked on Python 3.12 with every SDK):</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -574,7 +574,8 @@ import pennylane as qml
     benchmark_params={"target_bitstrings": ["00", "11"]},
 )
 def run():
-    dev = qml.device("default.qubit", wires=2, shots=1024)
+    dev = qml.device("default.qubit", wires=2)
+    @qml.set_shots(1024)
     @qml.qnode(dev)
     def circuit():
         qml.Hadamard(wires=0)
@@ -583,7 +584,7 @@ def run():
     return circuit()
 
 run()</code></pre>
-        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[pennylane]"</code>. Works with <code>qml.counts()</code> and <code>qml.expval()</code>.</p>
+        <p><strong>Install:</strong> <code>pip install qobserva "qobserva-agent[pennylane]"</code>. Works with <code>qml.counts()</code> and <code>qml.expval()</code>. <code>qml.set_shots</code> needs PennyLane 0.42+; on older versions pass <code>shots=1024</code> to <code>qml.device</code> instead.</p>
       </div>
 
       <div class="card">
