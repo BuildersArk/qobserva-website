@@ -448,16 +448,22 @@ cd packages/qobserva_ui_react &amp;&amp; npm install   # dashboard dev server (n
       <p>This starts the collector (<code>http://127.0.0.1:8080</code>) and the dashboard. Open <code>http://localhost:3000</code> in your browser. Stop everything with <code>qobserva down</code> from another terminal, or Ctrl+C. If QObserva is already running, <code>qobserva up</code> tells you where instead of starting a second copy.</p>
 
       <h3>3. Instrument Your Code</h3>
-      <pre><code>from qobserva import observe_run
+      <pre><code>from qiskit import QuantumCircuit
+from qiskit.primitives import StatevectorSampler
+from qobserva import observe_run
 
 @observe_run(
     project="my_project",
-    tags={"sdk": "qiskit", "algorithm": "bell_state"}
+    tags={"sdk": "qiskit", "algorithm": "bell_state"},
+    backend="statevector_sampler",  # V2 primitive results don't name their backend
+    provider="local_sim",
 )
 def my_quantum_algorithm():
-    # Your quantum code here
-    result = execute_circuit()
-    return result
+    qc = QuantumCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
+    qc.measure_all()
+    return StatevectorSampler().run([qc], shots=1024).result()
 
 my_quantum_algorithm()</code></pre>
       <p>Return the SDK's result object from the decorated function. QObserva records the run in the background, so your program never waits for it. If the collector isn't running, you get one warning and your code carries on.</p>
