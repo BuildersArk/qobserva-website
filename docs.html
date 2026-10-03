@@ -431,7 +431,7 @@
 
     <div class="doc-content wrap">
       <h2>Quick Start</h2>
-      <p>Get QObserva running in 3 steps. Current release: <strong>qobserva 0.1.7</strong> (<a href="https://github.com/BuildersArk/qobserva/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>).</p>
+      <p>Get QObserva running in 3 steps. Current release: <strong>qobserva 0.1.8</strong> (<a href="https://github.com/BuildersArk/qobserva/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>).</p>
 
       <h3>1. Install QObserva</h3>
       <p>Install QObserva together with the adapter extras for the SDK you use:</p>
@@ -468,7 +468,7 @@ my_quantum_algorithm()</code></pre>
       </div>
 
       <h2 id="python-compatibility">Python Version Compatibility</h2>
-      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs). Each SDK's example was run on Python 3.12, 3.13 and 3.14 in September 2026 (QObserva 0.1.6; the SDK adapters are unchanged in 0.1.7, which was re-checked on Python 3.12 with every SDK):</p>
+      <p><strong>Recommended: Python 3.12</strong> (supports all 6 SDKs). Each SDK's example was run on Python 3.12, 3.13 and 3.14 in September 2026 (QObserva 0.1.6; 0.1.7 and 0.1.8 were re-checked on Python 3.12 with every SDK, 0.1.8 from PyPI):</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -640,8 +640,9 @@ run()</code></pre>
       <pre><code>@observe_run(
     project: str,                     # Project name (e.g., "my_project")
     tags: dict = None,                # Tags dict (must include "sdk")
-    capture_program: str = "hash",    # "hash", "none" or "attachment"
-    await_result: bool = False,       # Call .result() on a returned job
+    capture_program: str = "full",    # "full", "hash", "none" or "attachment"
+    await_result: bool = False,       # Wait for a returned cloud job and record its results
+    circuit = None,                   # The circuit that ran, for circuit metrics and text
     measurement_key: str = None,      # Required for Cirq
     benchmark_id: str = None,         # Optional benchmark identifier
     benchmark_params: dict = None,    # Optional benchmark parameters
@@ -679,7 +680,13 @@ run()</code></pre>
               <td><code>await_result</code></td>
               <td>bool</td>
               <td>No</td>
-              <td>If your function returns a job, QObserva calls <code>.result()</code> and records the job's backend (e.g. IBM Runtime, Aer). The decorated function then returns the result.</td>
+              <td>If your function returns a cloud job (IBM Runtime job, Braket task, Google Quantum Engine job), QObserva waits for it, records its results, backend and job details, and the decorated function returns the result. Without it, a cloud job is recorded as pending with its job id and returned unchanged. Jobs from local simulators are always read.</td>
+            </tr>
+            <tr>
+              <td><code>circuit</code></td>
+              <td>circuit</td>
+              <td>No</td>
+              <td>The Qiskit, Cirq, Braket or pyQuil circuit that ran. QObserva records its qubits, depth, two-qubit gates and gate counts, plus its OpenQASM (Quil for pyQuil) and a text diagram. Not needed when the job or result already carries the circuit (IBM Runtime jobs, Braket results, Cirq Engine jobs, PennyLane QNodes).</td>
             </tr>
             <tr>
               <td><code>measurement_key</code></td>
@@ -721,14 +728,15 @@ run()</code></pre>
               <td><code>capture_program</code></td>
               <td>str</td>
               <td>No</td>
-              <td>How the program is captured: <code>"hash"</code> (default), <code>"none"</code> or <code>"attachment"</code></td>
+              <td>What to record about the circuit: <code>"full"</code> (default since 0.1.8: metrics, a hash, OpenQASM/Quil and a diagram), <code>"hash"</code> (metrics and a hash only, the 0.1.7 behavior), <code>"none"</code> (nothing) or <code>"attachment"</code>. Run data goes only to the collector you configure (local by default).</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <h3>Provider and backend labels</h3>
-      <p>QObserva records the provider and backend that the SDK's result actually reports. When the result doesn't say, you'll see <code>unknown</code> rather than a guess; pass <code>backend=</code> and <code>provider=</code> to label those runs. Examples: Aer and IBM's fake backends are <code>local_sim</code>, IBM hardware is <code>ibm</code> with the device name, Braket's LocalSimulator is <code>local_sim</code>, AWS-managed simulators are <code>aws_braket</code>, and the Rigetti QVM is <code>local_sim</code>.</p>
+      <p>QObserva records the provider and backend that the SDK's result actually reports. When the result doesn't say, you'll see <code>unknown</code> rather than a guess; pass <code>backend=</code> and <code>provider=</code> to label those runs. Examples: Aer and IBM's fake backends are <code>local_sim</code>, IBM hardware is <code>ibm</code> with the device name, Braket's LocalSimulator is <code>local_sim</code>, AWS-managed simulators are <code>aws_braket</code> (e.g. <code>sv1</code>), Braket QPUs are labeled by maker (e.g. <code>ionq / Forte-1</code>), Cirq's Quantum Virtual Machine is <code>local_sim</code> with the processor name (e.g. <code>willow_pink (virtual)</code>), PennyLane plugins are labeled by the device they ran (e.g. <code>ibm / ibm_fez</code> for <code>qiskit.remote</code>), and the Rigetti QVM is <code>local_sim</code>.</p>
+      <p>Results computed exactly, without sampling (a statevector Estimator, PennyLane in analytic mode, Braket with <code>shots=0</code>), show <strong>Exact</strong> instead of a shot count.</p>
 
       <h2>Configuration</h2>
       <p>Everything works with the defaults. These environment variables change them:</p>
